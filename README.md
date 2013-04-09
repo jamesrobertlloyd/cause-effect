@@ -35,5 +35,4 @@ See basic_python_benchmark.csv for an example of the format for submission to Ka
 predictors
 ==========
 
-* probabilities - Base predictions that can be interpreted as a probability
-* other - All other base predictors
+Base predictions
