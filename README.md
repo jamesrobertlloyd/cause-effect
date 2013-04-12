@@ -3,8 +3,7 @@ Welcome!
 
 This Git repository is for members of the meetup group [Data Insights Cambridge](http://www.meetup.com/Data-Insights-Cambridge/), who are participating in the Data Insights team in the Kaggle competition ['Cause-effect pairs'](http://www.kaggle.com/c/cause-effect-pairs).
 
-Plan
-----
+# Plan
 
 A Data Insights Cambridge team has been created on Kaggle. Please join this. [James Lloyd](mailto:jrl44@cam.ac.uk) has downloaded into this Git repository the competition data and any other relevant docs. 
 
