@@ -9,8 +9,7 @@ A Data Insights Cambridge team has been created on Kaggle. Please join this. [Ja
 
 Please work on your own separate predictions, and submit your solutions to the Git repository when ready. James will then lead the aggregation of the predictions (we might get-together for a 'hack day' to do this). James will submit final solutions to Kaggle by the deadline (in about 3 months). There will be a get-together scheduled for about 4-6 weeks time for all participants to touch-base (details will be posted on [meetup](http://www.meetup.com/Data-Insights-Cambridge/)).
 
-Terms
------
+### Terms
 
 All proprietary solutions and data are free for all members of the repository to use under a Creative Commons Attribution 3.0 license. 
 
@@ -43,25 +42,22 @@ Planned workflow / repository usage
 Directory structure
 ===================
 
-data
-----
+### data
 
 * raw - Raw data files downloaded from Kaggle
 * training - Split of training data to be used for training base predictors
 * ensemble_training - Split of training data to be used to train ensembling / aggregation methods
 * kaggle_validation - Test data examples with unknown targets
 
-benchmark-code
---------------
+### benchmark-code
+
 
 Python implementation of benchmark provided by competition organisers
 
-submissions
------------
+### submissions
 
 See basic_python_benchmark.csv for an example of the format for submission to Kaggle
 
-predictors
-----------
+### predictors
 
 Base predictions, split by type 
