@@ -1,0 +1,13 @@
+{
+    "train_pairs_path": "../data/training/CEdata_train_reduced_pairs.csv",
+    "train_target_path": "../data/training/CEdata_train_reduced_target.csv",
+    "train_info_path": "../data/training/CEdata_train_reduced_publicinfo.csv",
+    "ensemble_train_pairs_path": "../data/ensemble_training/CEdata_train_ensemble_pairs.csv",
+    "ensemble_train_target_path": "../data/ensemble_training/CEdata_train_ensemble_target.csv",
+    "ensemble_train_info_path": "../data/ensemble_training/CEdata_train_ensemble_publicinfo.csv",
+    "valid_pairs_path": "../data/kaggle_validation/CEdata_valid_pairs.csv",
+    "valid_info_path": "../data/kaggle_validation/CEdata_valid_publicinfo.csv",
+    "model_path": "./out.pickle",
+    "submission_path": "../submissions/basic_python_benchmark.csv",
+    "real_feature_path": "../predictors/real/"
+}
