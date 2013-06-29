@@ -1,7 +1,7 @@
 # example for CEfinal_valid_split batch
 
 # create R code for plotting
-for i in `seq 1 6027`; do
+for i in `seq 1 6075`; do
     perl plot.this.pl $i
 done
 

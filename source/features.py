@@ -2,6 +2,10 @@ import numpy as np
 from sklearn.base import BaseEstimator
 from scipy.special import psi
 from scipy.stats.stats import pearsonr
+from scipy.stats.stats import spearmanr
+from scipy.stats import kurtosis
+from scipy.stats import skew
+from scipy.stats import gmean
 
 class FeatureMapper:
     def __init__(self, features):
@@ -43,6 +47,21 @@ def identity(x):
 def count_unique(x):
     return len(set(x))
 
+def mean(x):
+    return np.mean(x)
+
+def sd(x):
+    return np.std(x)
+
+def fkurtosis(x):
+    return kurtosis(x)
+
+def fskew(x):
+    return skew(x)
+
+def fgmean(x):
+    return gmean(x)
+
 def normalized_entropy(x):
     x = (x - np.mean(x)) / np.std(x)
     x = np.sort(x)
@@ -59,8 +78,19 @@ def normalized_entropy(x):
 def entropy_difference(x, y):
     return normalized_entropy(x) - normalized_entropy(y)
 
+def entropy_ratio(x, y):
+    ex = normalized_entropy(x) 
+    ey = normalized_entropy(y)
+    if ey == 0:
+	    # upps
+	    ey = 0.0000000000001
+    return (ex/ey)
+
 def correlation(x, y):
     return pearsonr(x, y)[0]
+
+def rcorrelation(x, y):
+    return spearmanr(x, y)[0]
 
 def correlation_magnitude(x, y):
     return abs(correlation(x, y))
