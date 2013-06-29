@@ -1,7 +1,7 @@
 {
-    "train_pairs_path": "../data/training/CEdata_train_reduced_pairs.100.csv",
-    "train_target_path": "../data/training/CEdata_train_reduced_target.100.csv",
-    "train_info_path": "../data/training/CEdata_train_reduced_publicinfo.100.csv",
+    "train_pairs_path": "../data/training/CEdata_train_reduced_pairs.csv",
+    "train_target_path": "../data/training/CEdata_train_reduced_target.csv",
+    "train_info_path": "../data/training/CEdata_train_reduced_publicinfo.csv",
     "ensemble_train_pairs_path": "../data/ensemble_training/CEdata_train_ensemble_pairs.csv",
     "ensemble_train_target_path": "../data/ensemble_training/CEdata_train_ensemble_target.csv",
     "ensemble_train_info_path": "../data/ensemble_training/CEdata_train_ensemble_publicinfo.csv",
