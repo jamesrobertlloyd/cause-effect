@@ -9,7 +9,7 @@ library(randomForest)
 
 # Go random forest!
 
-rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 1000, ntree = 10000, importance=TRUE)
+rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 1000, importance=TRUE)
 predictions.AB <- rf.AB$test$votes[,2]
 
 #rf.BA <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==-1), xtest = X.valid, replace = TRUE, do.trace = 1000, ntree = 10000, importance=TRUE)
