@@ -9,6 +9,8 @@ library(randomForest)
 
 # Go random forest!
 
+#### TODO - try bagging with 95% data if increase in data helps - OOB error decreases significantly
+
 rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 5000, importance=TRUE)
 predictions.AB <- rf.AB$test$votes[,2]
 
