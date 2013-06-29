@@ -17,6 +17,11 @@ By using this Git repository you agree to these terms.
 
 Good luck!
 
+Updates
+=======
+
+The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz).
+
 Repository / challenge details
 ==============================
 
