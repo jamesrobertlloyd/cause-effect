@@ -18,43 +18,43 @@ def parse_dataframe(df):
 
 def read_train_pairs():
     train_path = get_paths()["train_pairs_path"]
-    return parse_dataframe(pd.read_csv(train_path, index_col="SampleID"))
+    return parse_dataframe(pd.read_csv(train_path, index_col=0))
 
 def read_train_target():
     path = get_paths()["train_target_path"]
-    df = pd.read_csv(path, index_col="SampleID")
+    df = pd.read_csv(path, index_col=0)
     df = df.rename(columns = dict(zip(df.columns, ["Target", "Details"])))
     return df
 
 def read_train_info():
     path = get_paths()["train_info_path"]
-    return pd.read_csv(path, index_col="SampleID")
+    return pd.read_csv(path, index_col=0)
 
 def read_ensemble_train_pairs():
     train_path = get_paths()["ensemble_train_pairs_path"]
-    return parse_dataframe(pd.read_csv(train_path, index_col="SampleID"))
+    return parse_dataframe(pd.read_csv(train_path, index_col=0))
 
 def read_ensemble_train_target():
     path = get_paths()["ensemble_train_target_path"]
-    df = pd.read_csv(path, index_col="SampleID")
+    df = pd.read_csv(path, index_col=0)
     df = df.rename(columns = dict(zip(df.columns, ["Target", "Details"])))
     return df
 
 def read_ensemble_train_info():
     path = get_paths()["ensemble_train_info_path"]
-    return pd.read_csv(path, index_col="SampleID")
+    return pd.read_csv(path, index_col=0)
 
 def read_valid_pairs():
     valid_path = get_paths()["valid_pairs_path"]
-    return parse_dataframe(pd.read_csv(valid_path, index_col="SampleID"))
+    return parse_dataframe(pd.read_csv(valid_path, index_col=0))
 
 def read_valid_info():
     path = get_paths()["valid_info_path"]
-    return pd.read_csv(path, index_col="SampleID")
+    return pd.read_csv(path, index_col=0)
 
 def read_solution():
     solution_path = get_paths()["solution_path"]
-    return pd.read_csv(solution_path, index_col="SampleID")
+    return pd.read_csv(solution_path, index_col=0)
 
 def save_model(model):
     out_path = get_paths()["model_path"]
@@ -66,7 +66,7 @@ def load_model():
 
 def read_submission():
     submission_path = get_paths()["submission_path"]
-    return pd.read_csv(submission_path, index_col="SampleID")
+    return pd.read_csv(submission_path, index_col=0)
 
 def write_submission(predictions):
     submission_path = get_paths()["submission_path"]
