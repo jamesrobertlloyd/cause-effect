@@ -21,6 +21,8 @@ def combine_features():
             for line in data:
                 if line.strip().split(',')[1] == '1':
                     combined_targets[line.split(',')[0]] = '1'
+                elif line.strip().split(',')[1] == '-1':
+                    combined_targets[line.split(',')[0]] = '-1'
                 else:
                     combined_targets[line.split(',')[0]] = '0'
     # Save ensemble data
