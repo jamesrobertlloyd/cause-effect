@@ -47,6 +47,9 @@ def identity(x):
 def count_unique(x):
     return len(set(x))
 
+def unique_ratio(x):
+    return count_unique(x)/float(len(x))
+
 def mean(x):
     return np.mean(x)
 
