@@ -1,0 +1,12 @@
+# example for CEfinal_valid_split batch
+
+# create R code for plotting
+for i in `seq 1 6027`; do
+    perl plot.this.pl $i
+done
+
+for i in `ls *.R`; do 
+    R --quiet --no-save --vanilla < $i
+done
+
+
