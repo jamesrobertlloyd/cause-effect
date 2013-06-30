@@ -5,8 +5,8 @@ def combine_features(use_training_data=False):
     row_names = ['train%d' % i for i in range(1, 19809+1, 1)] + ['valid%d' % i for i in range(1, 2642+1, 1)]
     # Concatenates feature files and saves is output format that is easy for random forest
     feature_files = ['../predictors/real/benchmark_features_no_sample_size.csv',
-                     #'../predictors/real/benchmark_features_ole_no_nas.csv',
-                     '../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
+                     '../predictors/real/benchmark_features_ole_no_nas.csv',
+                     #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
                      '../predictors/real/publicinfo.csv']
     combined = {row_name : [] for row_name in row_names}
     for filename in feature_files:
