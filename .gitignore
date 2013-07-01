@@ -36,3 +36,7 @@ nosetests.xml
 
 *~
 data/
+output/predictions.csv
+rf/rf_predictions.csv
+rf/train.csv
+rf/valid.csv
