@@ -17,10 +17,12 @@ By using this Git repository you agree to these terms.
 
 Good luck!
 
-Updates
-=======
+***Updates***
+=============
 
-The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz).
+* I recommend that people generate features using methods that don't perform any learning - this way all features can be used when training the final classifier
+* I recommend that everyone focuses on producing real valued features
+* The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz)
 
 Repository / challenge details
 ==============================
@@ -34,13 +36,14 @@ An important subtlety is the scoring metric
 * Final submissions to Kaggle should take the form of a number in \[-Inf, +Inf\] for each test example
 * The evaluation metric is the average of two AUCs - one testing accuracy on the clasfication task A->B vs. (B->A, A|B, A-B) and the other B->A vs. (A->B, A|B, A-B)
 
+(See updates before reading comment below)
 At the moment I am undecided if it will be best for everyone to produce predicted probabilities for the 4 class problem, 3 class problem (combining A-B and A|B) or producing scores in the range \[-Inf, +Inf\] directly. For the moment I recommend trying to produce all of these measures, or work on whichever seems most natural for you. We can use everything in the final aggregation stage.
 
 Planned workflow / repository usage
 ===================================
 
 * Develop predictors using the data in data/training
-* Evaluate the predictors on all training examples (data/training, data/ensemble_training, data/kaggle_validation) and put the output in the predictors directory
+* Evaluate the predictors on all training examples (see updates before reading me) (data/training, data/ensemble_training, data/kaggle_validation) and put the output in the predictors directory
 * Ensembling / aggregation methods will be used to combine the base predictors into a combined prediction, using data/ensemble_training as training data
 * Submissions will then be made to Kaggle, recording output in submissions
 
