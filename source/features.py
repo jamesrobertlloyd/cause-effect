@@ -6,6 +6,7 @@ from scipy.stats.stats import spearmanr
 from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy.stats import gmean
+from scipy.stats import moment
 
 class FeatureMapper:
     def __init__(self, features):
@@ -64,6 +65,66 @@ def fskew(x):
 
 def fgmean(x):
     return gmean(x)
+    
+def standard_moment_5(x):
+    return moment(x, 5) / (sd(x) ** 5)
+    
+def standard_moment_diff_5(x, y):
+    return standard_moment_5(x) - standard_moment_5(y)
+    
+def standard_moment_ratio_5(x, y):
+    if standard_moment_5(y) == 0:
+        return 0
+    else:
+        return standard_moment_5(x) / standard_moment_5(y)
+    
+def standard_moment_6(x):
+    return moment(x, 6) / (sd(x) ** 6)
+    
+def standard_moment_diff_6(x, y):
+    return standard_moment_6(x) - standard_moment_6(y)
+    
+def standard_moment_ratio_6(x, y):
+    if standard_moment_6(y) == 0:
+        return 0
+    else:
+        return standard_moment_6(x) / standard_moment_6(y)
+    
+def standard_moment_7(x):
+    return moment(x, 7) / (sd(x) ** 7)
+    
+def standard_moment_diff_7(x, y):
+    return standard_moment_7(x) - standard_moment_7(y)
+    
+def standard_moment_ratio_7(x, y):
+    if standard_moment_7(y) == 0:
+        return 0
+    else:
+        return standard_moment_7(x) / standard_moment_7(y)
+    
+def standard_moment_8(x):
+    return moment(x, 8) / (sd(x) ** 8)
+    
+def standard_moment_diff_8(x, y):
+    return standard_moment_8(x) - standard_moment_8(y)
+    
+def standard_moment_ratio_8(x, y):
+    if standard_moment_8(y) == 0:
+        return 0
+    else:
+        return standard_moment_8(x) / standard_moment_8(y)
+    
+def standard_moment_9(x):
+    return moment(x, 9) / (sd(x) ** 9)
+    
+def standard_moment_diff_9(x, y):
+    return standard_moment_9(x) - standard_moment_9(y)
+    
+def standard_moment_ratio_9(x, y):
+    if standard_moment_9(y) == 0:
+        return 0
+    else:
+        return standard_moment_9(x) / standard_moment_9(y)
 
 def normalized_entropy(x):
     x = (x - np.mean(x)) / np.std(x)
