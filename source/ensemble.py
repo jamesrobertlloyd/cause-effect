@@ -1,14 +1,14 @@
 # Various routines to help with ensembling the predictors
 
 def combine_features(use_training_data=False):
-    #row_names = ['train%d' % i for i in range(1, 19809+1, 1)] + ['valid%d' % i for i in range(1, 6075+1, 1)]
-    row_names = ['train%d' % i for i in range(1, 19809+1, 1)] + ['valid%d' % i for i in range(1, 2642+1, 1)]
+    row_names = ['train%d' % i for i in range(1, 16199+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
     # Concatenates feature files and saves is output format that is easy for random forest
     feature_files = [#'../predictors/real/benchmark_features_no_sample_size.csv',
                      #'../predictors/real/benchmark_features_ole_no_nas.csv',
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
                      '../predictors/real/publicinfo.csv',
-                     '../predictors/real/all.csv']
+                     '../predictors/real/reasonable_features_extended.csv',
+                     '../predictors/real/unreasonable_features.csv']
     combined = {row_name : [] for row_name in row_names}
     for filename in feature_files:
         with open(filename, 'r') as data:
@@ -43,7 +43,7 @@ def combine_features(use_training_data=False):
     with open('../rf/train.csv', 'w') as outfile:
         outfile.writelines(lines)
     # Save validation data
-    with open('../data/kaggle_validation/CEdata_valid_publicinfo.csv') as data:
+    with open('../data/kaggle_validation/CEfinal_valid_publicinfo.csv') as data:
         data.readline()
         valid_row_names = [line.split(',')[0] for line in data]
     lines = []
@@ -53,8 +53,7 @@ def combine_features(use_training_data=False):
         outfile.writelines(lines)
     
 def format_rf_output():
-    #valid_row_names = ['valid%d' % i for i in range(1, 6075+1, 1)]
-    valid_row_names = ['valid%d' % i for i in range(1, 2642+1, 1)]
+    valid_row_names = ['valid%d' % i for i in range(1, 4050+1, 1)]
     with open('../rf/rf_predictions.csv', 'r') as data:
         data.readline() # Skip header
         lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
