@@ -8,8 +8,9 @@ def combine_features(use_training_data=False):
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
                      '../predictors/real/publicinfo.csv',
                      '../predictors/real/reasonable_features.csv',#_extended.csv',
-                     '../predictors/real/unreasonable_features.csv',
-                     '../predictors/real/corrs.csv']#,
+                     '../predictors/real/unreasonable_features.csv']#,
+                     #'../predictors/real/kendall.csv']#,
+                     #'../predictors/real/corrs.csv']#,
                      #'../predictors/real/moment_5.csv']
                      #'../predictors/real/high_order_moments.csv']
     combined = {row_name : [] for row_name in row_names}
