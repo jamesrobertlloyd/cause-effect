@@ -7,14 +7,17 @@ def combine_features(use_training_data=False):
                      #'../predictors/real/benchmark_features_ole_no_nas.csv',
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
                      '../predictors/real/publicinfo.csv',
-                     '../predictors/real/reasonable_features_extended.csv',
-                     '../predictors/real/unreasonable_features.csv']#,
+                     '../predictors/real/reasonable_features.csv',#_extended.csv',
+                     '../predictors/real/unreasonable_features.csv',
+                     '../predictors/real/corrs.csv']#,
                      #'../predictors/real/moment_5.csv']
                      #'../predictors/real/high_order_moments.csv']
     combined = {row_name : [] for row_name in row_names}
+    feature_names = []
     for filename in feature_files:
         with open(filename, 'r') as data:
-            data.readline() # Skip header
+            #data.readline() # Skip header
+            feature_names += data.readline().strip().split(',')[1:]
             for line in data:
                 combined[line.split(',')[0]] += line.rstrip().split(',')[1:]
     # Load all targets
@@ -40,6 +43,7 @@ def combine_features(use_training_data=False):
             data.readline()
             ensemble_row_names += [line.split(',')[0] for line in data]
     lines = []
+    lines.append('Target,' + ','.join(feature_names) + '\n')
     for row_name in ensemble_row_names:
         lines.append(','.join([combined_targets[row_name]] + combined[row_name]) + '\n')
     with open('../rf/train.csv', 'w') as outfile:
@@ -49,6 +53,7 @@ def combine_features(use_training_data=False):
         data.readline()
         valid_row_names = [line.split(',')[0] for line in data]
     lines = []
+    lines.append(','.join(feature_names) + '\n')
     for row_name in valid_row_names:
         lines.append(','.join(combined[row_name]) + '\n')
     with open('../rf/valid.csv', 'w') as outfile:

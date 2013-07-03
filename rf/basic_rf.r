@@ -1,7 +1,7 @@
 # Read data files
 
-X.train <- read.table('train.csv', header = FALSE, sep = ',')
-X.valid <- read.table('valid.csv', header = FALSE, sep = ',')
+X.train <- read.table('train.csv', header = TRUE, sep = ',')
+X.valid <- read.table('valid.csv', header = TRUE, sep = ',')
 
 # Random forest it
 
@@ -14,6 +14,7 @@ library(randomForest)
 set.seed(1234)
 rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 20000, importance=TRUE)
 predictions.AB <- rf.AB$test$votes[,2]
+rf.AB$importance
 
 #set.seed(1234)
 #rf.BA <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==-1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 5000, importance=TRUE)

@@ -14,12 +14,20 @@ def feature_extractor():
                 ('Entropy Difference', ['A','B'], f.MultiColumnTransform(f.entropy_difference)),
                 ('Entropy Ratio', ['A','B'], f.MultiColumnTransform(f.entropy_ratio)),
                 ('Spearman rank correlation', ['A','B'], f.MultiColumnTransform(f.rcorrelation)),
+                ('Spearman rank magnitude', ['A','B'], f.MultiColumnTransform(f.rcorrelation_magnitude)),
                 ('Kurtosis A', 'A', f.SimpleTransform(transformer=f.fkurtosis)),
                 ('Kurtosis B', 'B', f.SimpleTransform(transformer=f.fkurtosis)),
+                ('Kurtosis difference', ['A', 'B'], f.MultiColumnTransform(transformer=f.fkurtosis_diff)),
+                ('Kurtosis ratio', ['A', 'B'], f.MultiColumnTransform(transformer=f.fkurtosis_ratio)),
                 ('Unique ratio A', 'A', f.SimpleTransform(transformer=f.unique_ratio)),
                 ('Unique ratio B', 'B', f.SimpleTransform(transformer=f.unique_ratio)),
                 ('Skew A', 'A', f.SimpleTransform(transformer=f.fskew)),
-                ('Skew B', 'B', f.SimpleTransform(transformer=f.fskew))]
+                ('Skew B', 'B', f.SimpleTransform(transformer=f.fskew)),
+                ('Skew difference', ['A', 'B'], f.MultiColumnTransform(transformer=f.fskew_diff)),
+                ('Skew ratio', ['A', 'B'], f.MultiColumnTransform(transformer=f.fskew_ratio)),
+                ('Pearson - Spearman', ['A', 'B'], f.MultiColumnTransform(transformer=f.Pearson_Spearman_diff)),
+                ('Abs Pearson - Spearman', ['A', 'B'], f.MultiColumnTransform(transformer=f.Pearson_Spearman_abs_diff)),
+                ('Pearson / Spearman', ['A', 'B'], f.MultiColumnTransform(transformer=f.Pearson_Spearman_ratio))]
     combined = f.FeatureMapper(features)
     return combined
 
@@ -60,12 +68,20 @@ def main():
                      'Entropy Difference',
                      'Entropy Ratio',
                      'Spearman rank correlation',
+                     'Spearman rank magnitude',
                      'Kurtosis A',
                      'Kurtosis B',
+                     'Kurtosis difference',
+                     'Kurtosis ratio',
                      'Unique ratio A',
                      'Unique ratio B',
                      'Skew A',
-                     'Skew B']
+                     'Skew B',
+                     'Skew difference',
+                     'Skew ratio',
+                     'Pearson - Spearman',
+                     'Abs Pearson - Spearman',
+                     'Pearson / Spearman']
     data_io.write_real_features('reasonable_features', all_names, all_features, feature_names)
     
 if __name__=="__main__":

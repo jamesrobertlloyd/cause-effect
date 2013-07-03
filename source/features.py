@@ -7,6 +7,7 @@ from scipy.stats import kurtosis
 from scipy.stats import skew
 from scipy.stats import gmean
 from scipy.stats import moment
+import scipy.stats
 
 class FeatureMapper:
     def __init__(self, features):
@@ -54,14 +55,35 @@ def unique_ratio(x):
 def mean(x):
     return np.mean(x)
 
+def median(x):
+    return scipy.stats.cmedian(x)
+
 def sd(x):
     return np.std(x)
 
 def fkurtosis(x):
     return kurtosis(x)
 
+def fkurtosis_diff(x, y):
+    return kurtosis(x) - kurtosis(y)
+
+def fkurtosis_ratio(x, y):
+    if kurtosis(y) == 0:
+        return 0
+    else:
+        return kurtosis(x) / kurtosis(y)
+
 def fskew(x):
     return skew(x)
+
+def fskew_diff(x, y):
+    return skew(x) - skew(y)
+
+def fskew_ratio(x, y):
+    if skew(y) == 0:
+        return 0
+    else:
+        return skew(x) / skew(y)
 
 def fgmean(x):
     return gmean(x)
@@ -156,8 +178,47 @@ def correlation(x, y):
 def rcorrelation(x, y):
     return spearmanr(x, y)[0]
 
+def rcorrelation_magnitude(x, y):
+    return abs(spearmanr(x, y)[0])
+
 def correlation_magnitude(x, y):
     return abs(correlation(x, y))
+
+def Pearson_Spearman_diff(x, y):
+    return correlation(x, y) - rcorrelation(x, y)
+
+def Pearson_Spearman_abs_diff(x, y):
+    return correlation_magnitude(x, y) - rcorrelation_magnitude(x, y)
+
+def Pearson_Spearman_ratio(x, y):
+    if rcorrelation(x, y) == 0:
+        0
+    else:
+        return correlation(x, y) / rcorrelation(x, y)
+     
+def kendall(x, y):
+    return scipy.stats.kendalltau(x, y)[0]
+     
+def kendall_p(x, y):
+    return scipy.stats.kendalltau(x, y)[1]
+     
+def mannwhitney(x, y):
+    return scipy.stats.mannwhitneyu(x, y)[0]
+     
+def mannwhitney_p(x, y):
+    return scipy.stats.mannwhitneyu(x, y)[1]
+     
+def wilcoxon(x, y):
+    return scipy.stats.wilcoxon(x, y)[0]
+     
+def wilcoxon_p(x, y):
+    return scipy.stats.wilcoxon(x, y)[1]
+     
+def kruskal(x, y):
+    return scipy.stats.kruskal(x, y)[0]
+     
+def kruskal_p(x, y):
+    return scipy.stats.kruskal(x, y)[1]
 
 class SimpleTransform(BaseEstimator):
     def __init__(self, transformer=identity):

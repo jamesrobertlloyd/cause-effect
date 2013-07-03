@@ -14,6 +14,8 @@ def feature_extractor():
                 ('Min B', 'B', f.SimpleTransform(transformer=min)),
                 ('Mean A', 'A', f.SimpleTransform(transformer=f.mean)),
                 ('Mean B', 'B', f.SimpleTransform(transformer=f.mean)),
+                ('Median A', 'A', f.SimpleTransform(transformer=f.median)),
+                ('Median B', 'B', f.SimpleTransform(transformer=f.median)),
                 ('Sd A', 'A', f.SimpleTransform(transformer=f.sd)),
                 ('Sd B', 'B', f.SimpleTransform(transformer=f.sd))]
     combined = f.FeatureMapper(features)
@@ -56,6 +58,8 @@ def main():
                      'Min B',
                      'Mean A',
                      'Mean B',
+                     'Median A',
+                     'Median B',
                      'Sd A',
                      'Sd B']
     data_io.write_real_features('unreasonable_features', all_names, all_features, feature_names)
