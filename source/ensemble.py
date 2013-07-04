@@ -1,7 +1,8 @@
 # Various routines to help with ensembling the predictors
 
 def combine_features(use_training_data=False):
-    row_names = ['train%d' % i for i in range(1, 16199+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
+    #row_names = ['train%d' % i for i in range(1, 16199+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
+    row_names = ['train%d' % i for i in range(1, 32398+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
     # Concatenates feature files and saves is output format that is easy for random forest
     feature_files = [#'../predictors/real/benchmark_features_no_sample_size.csv',
                      #'../predictors/real/benchmark_features_ole_no_nas.csv',
