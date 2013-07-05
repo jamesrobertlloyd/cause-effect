@@ -20,6 +20,7 @@ Good luck!
 ***Updates***
 =============
 
+* I have updated the data files - I am no longer splitting into training and ensemble training - also, I have generated extra data (for each pair (A,B), also include (B,A)) - this is in the directory data/training-flipped
 * I recommend that people generate features using methods that don't perform any learning - this way all features can be used when training the final classifier
 * I recommend that everyone focuses on producing real valued features
 * The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz)
