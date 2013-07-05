@@ -3,13 +3,14 @@
 def combine_features(use_training_data=False):
     #row_names = ['train%d' % i for i in range(1, 16199+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
     row_names = ['train%d' % i for i in range(1, 32398+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
+    #row_names = ['train%d' % i for i in range(1, 129592+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
     # Concatenates feature files and saves is output format that is easy for random forest
     feature_files = [#'../predictors/real/benchmark_features_no_sample_size.csv',
                      #'../predictors/real/benchmark_features_ole_no_nas.csv',
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
-                     '../predictors/real/publicinfo.csv',
-                     '../predictors/real/reasonable_features.csv',#_extended.csv',
-                     '../predictors/real/unreasonable_features.csv']#,
+                     '../features/real/publicinfo_small.csv',
+                     '../features/real/reasonable_features_small.csv',#_extended.csv',
+                     '../features/real/unreasonable_features_small.csv']#,
                      #'../predictors/real/kendall.csv']#,
                      #'../predictors/real/corrs.csv']#,
                      #'../predictors/real/moment_5.csv']
@@ -23,8 +24,8 @@ def combine_features(use_training_data=False):
             for line in data:
                 combined[line.split(',')[0]] += line.rstrip().split(',')[1:]
     # Load all targets
-    target_files = ['../data/training/CEdata_train_reduced_target.csv',
-                    '../data/ensemble_training/CEdata_train_ensemble_target.csv']
+    target_files = ['../data/training-flipped/CEdata_train_target.csv']#,
+                    #'../data/ensemble_training/CEdata_train_ensemble_target.csv']
     combined_targets = {row_name : '' for row_name in row_names}
     for filename in target_files:
         with open(filename, 'r') as data:
@@ -37,13 +38,14 @@ def combine_features(use_training_data=False):
                 else:
                     combined_targets[line.split(',')[0]] = '0'
     # Save ensemble data
-    with open('../data/ensemble_training/CEdata_train_ensemble_target.csv') as data:
+    #with open('../data/ensemble_training/CEdata_train_ensemble_target.csv') as data:
+    with open('../data/training-flipped/CEdata_train_target.csv') as data:
         data.readline()
         ensemble_row_names = [line.split(',')[0] for line in data]
-    if use_training_data:
-        with open('../data/training/CEdata_train_reduced_target.csv') as data:
-            data.readline()
-            ensemble_row_names += [line.split(',')[0] for line in data]
+    #if use_training_data:
+    #    with open('../data/training/CEdata_train_reduced_target.csv') as data:
+    #        data.readline()
+    #        ensemble_row_names += [line.split(',')[0] for line in data]
     lines = []
     lines.append('Target,' + ','.join(feature_names) + '\n')
     for row_name in ensemble_row_names:
@@ -51,7 +53,8 @@ def combine_features(use_training_data=False):
     with open('../rf/train.csv', 'w') as outfile:
         outfile.writelines(lines)
     # Save validation data
-    with open('../data/kaggle_validation/CEfinal_valid_publicinfo.csv') as data:
+    #with open('../data/kaggle_validation/CEfinal_valid_publicinfo.csv') as data:
+    with open('../data/validation/CEfinal_valid_publicinfo.csv') as data:
         data.readline()
         valid_row_names = [line.split(',')[0] for line in data]
     lines = []

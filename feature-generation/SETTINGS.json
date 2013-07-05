@@ -1,0 +1,5 @@
+{
+    "train_pairs_path": "../data/training-flipped/CEdata_train_pairs.csv",
+    "valid_pairs_path": "../data/validation/CEfinal_valid_pairs.csv",
+    "real_feature_path": "../features/real/"
+}

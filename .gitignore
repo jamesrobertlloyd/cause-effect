@@ -35,10 +35,19 @@ nosetests.xml
 .pydevproject
 
 *~
-data/
+data/raw
+data/testing
+data/training
+data/training-flipped
+data/training-flipped-reversed
+data/training-reversed
+data/validation
 output/predictions.csv
 archive/data-old/
 archive/data-old-2/
+archive/data-old-3/
 rf/rf_predictions.csv
 rf/train.csv
 rf/valid.csv
+archive/features-old/
+
