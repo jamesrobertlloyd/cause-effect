@@ -8,9 +8,9 @@ def combine_features(use_training_data=False):
     feature_files = [#'../predictors/real/benchmark_features_no_sample_size.csv',
                      #'../predictors/real/benchmark_features_ole_no_nas.csv',
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
-                     '../features/real/publicinfo_small.csv',
-                     '../features/real/reasonable_features_small.csv',#_extended.csv',
-                     '../features/real/unreasonable_features_small.csv']#,
+                     '../features/real/publicinfo.csv',
+                     '../features/real/reasonable_features.csv',#_extended.csv',
+                     '../features/real/unreasonable_features.csv']#,
                      #'../predictors/real/kendall.csv']#,
                      #'../predictors/real/corrs.csv']#,
                      #'../predictors/real/moment_5.csv']
