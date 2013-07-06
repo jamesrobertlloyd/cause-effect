@@ -51,3 +51,4 @@ rf/train.csv
 rf/valid.csv
 archive/features-old/
 dbn/gdahl/mnist.npz
+*.DS_Store
