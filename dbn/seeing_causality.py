@@ -30,6 +30,7 @@ import sys
 import matplotlib.pyplot as plt
 import matplotlib
 from counter import Progress
+import scipy.stats
 
 def numMistakes(targetsMB, outputs):
     if not isinstance(outputs, np.ndarray):
@@ -43,6 +44,9 @@ def sampleMinibatch(mbsz, inps, targs):
     return inps[idx], targs[idx]
     
 def pairs_to_image(A, B, image_size):
+    # Take PIT of inputs
+    A = scipy.stats.norm.cdf(scipy.stats.zscore(A))
+    B = scipy.stats.norm.cdf(scipy.stats.zscore(B))
     # Converts pairs into scatter plot bitmap image
     image = np.zeros([image_size, image_size])
     min_A = min(A)
@@ -54,18 +58,24 @@ def pairs_to_image(A, B, image_size):
         image[np.floor(min(image_size - 1, (a - min_A) * image_size / (max_A - min_A))), min(image_size - 1, np.floor((b - min_B) * image_size / (max_B - min_B)))] += 1
     # Normalise
     image = 1.0 * image / len(A)
-    #### TODO - apply PIT
+    # Remove mean
+    image = image - np.mean(image)
+    # Truncate to 3 std and scale to -1 to 1
+    std = 3 * np.std(image)
+    image = np.clip(image, -std, std) / std;
+    # Rescale from [-1,1] to [0.1,0.9]
+    image = (image + 1) * 0.4 + 0.1;
     return image.ravel()
 
 def main(dropout=False):
-    mbsz = 64 # Size of minibatch
-    image_size = 28;
+    mbsz = 128 # Size of minibatch
+    image_size = 20;
     layerSizes = [image_size ** 2, 512, 512, 2] # 28 x 28 visible images, 512 hidden, 512 hidden, 2 labels
     scales = [0.05 for i in range(len(layerSizes)-1)] # Dunno
     fanOuts = [None for i in range(len(layerSizes)-1)] # Restricts number of incoming links (viewing net as visible -> hidden)
-    learnRate = 0.03 # Not sure
-    epochs = 20 # 20
-    mbPerEpoch = 100 # 10000 # int(num.ceil(60000./mbsz)) # Number of mini-batches per epoch
+    learnRate = 0.02 # Not sure
+    epochs = 100 # 20
+    mbPerEpoch = 2500 # 10000 # int(num.ceil(60000./mbsz)) # Number of mini-batches per epoch
     
     print('Loading pairs data')
     with open('../data/training-flipped/CEdata_train_pairs.csv', 'r') as pairs_data_file:
@@ -91,12 +101,12 @@ def main(dropout=False):
     with open('../data/training-flipped/CEdata_train_target.csv', 'r') as pairs_data_file:
         pairs_header = pairs_data_file.readline()
         pairs_body = pairs_data_file.readlines()
-    Targs = np.concatenate(np.array([1.0 if line.split(',')[1] == '1' else 0.0 for line in pairs_body]), np.array([0.0 if line.split(',')[1] == '1' else 1.0 for line in pairs_body]))
+    Targs = np.array(list(zip([1.0 if line.split(',')[1] == '1' else 0.0 for line in pairs_body], [0.0 if line.split(',')[1] == '1' else 1.0 for line in pairs_body])))
     print('Splitting data')
-    trainInps = Inps[1:100,:]
-    trainTargs = Targs[1:100]
-    testInps = Inps[100:200,:]
-    testTargs = Targs[100:200]
+    trainInps = Inps[1:28000,:]
+    trainTargs = Targs[1:28000,:]
+    testInps = Inps[28000:32000,:]
+    testTargs = Targs[28000:32000,:]
     print('Doing DNN stuff')
     
     #f = np.load("gdahl/mnist.npz")
@@ -127,7 +137,7 @@ def main(dropout=False):
             print 'Layer %d Epoch %d State = %s' % (layer, epoch+1, state)
     
     if dropout:
-        net.learnRates = [2.0 for unused in net.learnRates]  
+        net.learnRates = [0.5 for unused in net.learnRates]  
     else:
         net.learnRates = [0.4 for unused in net.learnRates]      
             
@@ -139,7 +149,7 @@ def main(dropout=False):
     
     # Fine tuning
     
-    epochs = 50
+    epochs = 100
     
     for ep, (trCE, trEr) in enumerate(net.fineTune(mbStream, epochs, mbPerEpoch, numMistakes, True, dropout)):
         print 'Fine tuning Epoch %d, trCE = %s, trEr = %s' % (ep, trCE, trEr)
