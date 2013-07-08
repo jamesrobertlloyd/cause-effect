@@ -3,8 +3,6 @@
 X.train <- read.table('train.csv', header = TRUE, sep = ',')
 X.valid <- read.table('valid.csv', header = TRUE, sep = ',')
 
-X.train <- X.train[1:5000,]
-
 # Random forest it
 
 library(randomForest)
@@ -14,7 +12,7 @@ library(randomForest)
 #### TODO - try bagging with 95% data if increase in data helps - OOB error decreases significantly
 
 set.seed(1234)
-rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 5000, importance=TRUE)
+rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 100000, importance=TRUE)
 predictions.AB <- rf.AB$test$votes[,2]
 sort(rf.AB$importance[,4])
 
