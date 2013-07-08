@@ -175,6 +175,39 @@ def main(dropout=False):
             
     print '\nPercentage correct = %2.2f%%' % (num_correct * 100.0 / testTargs.shape[0])
     
+    print('Loading validation data')
+    with open('../data/validation/CEfinal_valid_pairs.csv', 'r') as valid_data_file:
+        valid_header = valid_data_file.readline()
+        valid_body = valid_data_file.readlines()
+    valid = []
+    prog = Progress(len(valid_body))
+    for line in valid_body:
+        A = np.array([float(a) for a in line.strip().split(',')[1].strip().split(' ')])
+        B = np.array([float(b) for b in line.strip().split(',')[2].strip().split(' ')])
+        valid.append((A, B))
+        prog.tick()
+    prog.done()
+    print('Converting to images')
+    validInps = np.zeros([len(valid), image_size ** 2])
+    prog = Progress(len(valid))
+    for (i, (A, B)) in enumerate(valid):
+        validInps[i,:] = pairs_to_image(A, B, image_size)
+        prog.tick()
+    prog.done()  
+    
+    predictions = []
+    for (i, validInp) in enumerate(validInps):
+        predictions.append(net.fprop(validInp)[0][0])
+        
+    i = np.random.randint(len(valid))
+    print predictions[i]    
+    imshow(np.reshape(validInps[i], (image_size, image_size)))
+    
+    valid_row_names = ['valid%d' % i for i in range(1, 4050+1, 1)]
+    lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + str(p) + '\n' for (i, p) in enumerate(predictions)]
+    with open('predictions.csv', 'w') as outfile:
+        outfile.writelines(lines)
+    
     return net
 
 if __name__ == "__main__":
