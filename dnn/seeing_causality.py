@@ -68,14 +68,14 @@ def pairs_to_image(A, B, image_size):
     return image.ravel()
 
 def main(dropout=False):
-    mbsz = 128 # Size of minibatch
+    mbsz = 1024 # Size of minibatch
     image_size = 20;
     layerSizes = [image_size ** 2, 512, 512, 2] # 28 x 28 visible images, 512 hidden, 512 hidden, 2 labels
     scales = [0.05 for i in range(len(layerSizes)-1)] # Dunno
     fanOuts = [None for i in range(len(layerSizes)-1)] # Restricts number of incoming links (viewing net as visible -> hidden)
     learnRate = 0.02 # Not sure
     epochs = 100 # 20
-    mbPerEpoch = 2500 # 10000 # int(num.ceil(60000./mbsz)) # Number of mini-batches per epoch
+    mbPerEpoch = 500 # 10000 # int(num.ceil(60000./mbsz)) # Number of mini-batches per epoch
     
     print('Loading pairs data')
     with open('../data/training-flipped/CEdata_train_pairs.csv', 'r') as pairs_data_file:
@@ -137,7 +137,7 @@ def main(dropout=False):
             print 'Layer %d Epoch %d State = %s' % (layer, epoch+1, state)
     
     if dropout:
-        net.learnRates = [0.5 for unused in net.learnRates]  
+        net.learnRates = [0.6 for unused in net.learnRates]  
     else:
         net.learnRates = [0.4 for unused in net.learnRates]      
             
@@ -149,7 +149,7 @@ def main(dropout=False):
     
     # Fine tuning
     
-    epochs = 100
+    epochs = 10000
     
     for ep, (trCE, trEr) in enumerate(net.fineTune(mbStream, epochs, mbPerEpoch, numMistakes, True, dropout)):
         print 'Fine tuning Epoch %d, trCE = %s, trEr = %s' % (ep, trCE, trEr)
