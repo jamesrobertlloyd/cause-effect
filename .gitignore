@@ -56,3 +56,4 @@ dnn/dropout/*.p
 data/temp.csv
 rf/saved-forest-AB.RData
 output
+dnn/hfdemo/digs3pts_1.mat

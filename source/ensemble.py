@@ -12,6 +12,7 @@ def combine_features(use_training_data=False):
                      #'../predictors/real/benchmark_features_ole_only_rank_skew_kurt.csv',
                      '../features/real/publicinfo.csv',
                      '../features/real/reasonable_features.csv',#_extended.csv',
+                     '../features/real/injectivity.csv',
                      '../features/real/unreasonable_features.csv']#,
                      #'../predictors/real/kendall.csv']#,
                      #'../predictors/real/corrs.csv']#,
