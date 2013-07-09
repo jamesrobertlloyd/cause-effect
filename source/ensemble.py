@@ -1,5 +1,7 @@
 # Various routines to help with ensembling the predictors
 
+import sys
+
 def combine_features(use_training_data=False):
     #row_names = ['train%d' % i for i in range(1, 16199+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
     row_names = ['train%d' % i for i in range(1, 32398+1, 1)] + ['valid%d' % i for i in range(1, 4050+1, 1)]
@@ -69,6 +71,13 @@ def format_rf_output():
     with open('../rf/rf_predictions.csv', 'r') as data:
         data.readline() # Skip header
         lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
-    with open('../output/predictions.csv', 'w') as outfile:
+    with open('../output/rf_predictions.csv', 'w') as outfile:
         outfile.writelines(lines)
+        
+if __name__=="__main__":
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'combine-features':
+            combine_features(True)
+        elif sys.argv[1] == 'format-rf':
+            format_rf_output()
     
