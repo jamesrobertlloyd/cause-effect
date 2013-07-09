@@ -54,3 +54,4 @@ dbn/gdahl/mnist.npz
 dnn/gdahl/mnist.npz
 *.DS_Store
 dnn/*.p
+data/temp.csv
