@@ -49,16 +49,16 @@ An important subtlety is the scoring metric
 (See updates before reading comment below)
 At the moment I am undecided if it will be best for everyone to produce predicted probabilities for the 4 class problem, 3 class problem (combining A-B and A|B) or producing scores in the range \[-Inf, +Inf\] directly. For the moment I recommend trying to produce all of these measures, or work on whichever seems most natural for you. We can use everything in the final aggregation stage.
 
-Planned workflow / repository usage
-===================================
+OUT OF DATE - Planned workflow / repository usage
+=================================================
 
 * Develop predictors using the data in data/training
 * Evaluate the predictors on all training examples (see updates before reading me) (data/training, data/ensemble_training, data/kaggle_validation) and put the output in the predictors directory
 * Ensembling / aggregation methods will be used to combine the base predictors into a combined prediction, using data/ensemble_training as training data
 * Submissions will then be made to Kaggle, recording output in submissions
 
-Directory structure
-===================
+OUT OF DATE - Directory structure
+=================================
 
 ### data
 
