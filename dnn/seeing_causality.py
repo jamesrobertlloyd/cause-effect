@@ -31,6 +31,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 from counter import Progress
 import scipy.stats
+import pickle
 
 def numMistakes(targetsMB, outputs):
     if not isinstance(outputs, np.ndarray):
@@ -66,6 +67,13 @@ def pairs_to_image(A, B, image_size):
     # Rescale from [-1,1] to [0.1,0.9]
     image = (image + 1) * 0.4 + 0.1;
     return image.ravel()
+    
+def load_stuff():
+    net = pickle.load(open('net.p', 'rb'))
+    trainInps = pickle.load(open('trainInps.p', 'rb'))
+    trainTargs = pickle.load(open('trainTargs.p', 'rb'))
+    testInps = pickle.load(open('testInps.p', 'rb'))
+    testTargs = pickle.load(open('testTargs.p', 'rb'))
 
 def main(dropout=False):
     mbsz = 1024 # Size of minibatch
@@ -149,7 +157,7 @@ def main(dropout=False):
     
     # Fine tuning
     
-    epochs = 10000
+    epochs = 100000
     
     for ep, (trCE, trEr) in enumerate(net.fineTune(mbStream, epochs, mbPerEpoch, numMistakes, True, dropout)):
         print 'Fine tuning Epoch %d, trCE = %s, trEr = %s' % (ep, trCE, trEr)
@@ -209,6 +217,7 @@ def main(dropout=False):
         outfile.writelines(lines)
     
     return net
+    
 
 if __name__ == "__main__":
     main()
