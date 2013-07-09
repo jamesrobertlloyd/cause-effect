@@ -11,13 +11,20 @@ library(randomForest)
 
 set.seed(1234)
 
+high-memory = FALSE
+
 if (file.exists('saved-forest-AB.RData'))
 {
     load('saved-forest-AB.RData')
 } else
 {
-    rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=TRUE)
-    save(rf.AB, 'rf.AB', file = 'saved-forest-AB.RData')
+    if (high-memory) {
+        rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=TRUE)
+        save(rf.AB, 'rf.AB', file = 'saved-forest-AB.RData')
+    } else
+    {
+        rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=FALSE)
+    }
 }
 
 #predictions.AB <- rf.AB$test$votes[,2]
