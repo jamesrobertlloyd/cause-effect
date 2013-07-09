@@ -24,7 +24,7 @@ Good luck!
 * Copy the contents of [this](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz) into data/raw
 * Change directory to source
 * Run python run.py
-* Examine the script above and the scripts is subsequently calls to understand how everything is set up
+* Examine the script above and the scripts it subsequently calls to understand how everything is set up (apologies - things are too fast moving to write a more explicit guide)
 
 ***Updates***
 =============
