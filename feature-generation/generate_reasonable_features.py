@@ -1,12 +1,21 @@
+import numpy as np
+import os.path
+
 import data_io
 import features as f
-import numpy as np
 
-def main():
+def main(overwrite=False):
+
+    #### TODO - sequential processing of data would significantly reduce memory demands
+    
+    if (not overwrite) and os.path.exists(os.path.join(data_io.get_paths()["real_feature_path"], 'reasonable_features.csv')):
+        print 'Feature file already exists - not overwriting'
+        return
+
     features = [('A: Normalized Entropy', 'A', f.normalized_entropy),
                 ('B: Normalized Entropy', 'B', f.normalized_entropy),
                 ('Pearson R', ['A','B'], f.correlation),
-                ('Pearson R Magnitude', 'derived', 'abs(output[key][2])'),
+                ('Pearson R Magnitude', 'derived', 'abs(output[key][2])'),# Apologies for this weird feature definition mechanism - it is a quick hack to prevent duplicated computation
                 ('Entropy Difference', 'derived', 'output[key][0] - output[key][1]'),
                 ('Entropy Ratio', 'derived', 'output[key][0] / output[key][1] if not output[key][1] == 0 else output[key][0] / 0.000001'),
                 ('Spearman rank correlation', ['A','B'], f.rcorrelation),

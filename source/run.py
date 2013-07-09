@@ -10,3 +10,17 @@ saved_path = os.getcwd()
 os.chdir('../data/')
 subprocess.call(['python', 'process-data.py'])
 os.chdir(saved_path)
+
+print '\n* * * * *\nCalling reasonable feature script\n* * * * *\n'
+
+saved_path = os.getcwd()
+os.chdir('../feature-generation/')
+subprocess.call(['python', 'generate_reasonable_features.py'])
+os.chdir(saved_path)
+
+print '\n* * * * *\nCalling unreasonable feature script\n* * * * *\n'
+
+saved_path = os.getcwd()
+os.chdir('../feature-generation/')
+subprocess.call(['python', 'generate_reasonable_features.py'])
+os.chdir(saved_path)

@@ -3,6 +3,13 @@ import features as f
 import numpy as np
 
 def main():
+
+    #### TODO - sequential processing of data would significantly reduce memory demands
+    
+    if (not overwrite) and os.path.exists(os.path.join(data_io.get_paths()["real_feature_path"], 'unreasonable_features.csv')):
+        print 'Feature file already exists - not overwriting'
+        return
+        
     features = [('Number of Samples', 'A', len),
                 ('Max A', 'A', max),
                 ('Max B', 'B', max),
