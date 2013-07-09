@@ -204,3 +204,56 @@ def kruskal(x, y):
      
 def kruskal_p(x, y):
     return scipy.stats.kruskal(x, y)[1]
+    
+def injectivity(A, B, image_size):
+    # Converts pairs into scatter plot bitmap image
+    image = np.zeros([image_size, image_size])
+    min_A = min(A)
+    min_B = min(B)
+    max_A = max(A)
+    max_B = max(B)
+    for (a, b) in zip(A, B):
+        # Record the data point in the square it falls in
+        image[np.floor(min(image_size - 1, (a - min_A) * image_size / (max_A - min_A))), min(image_size - 1, np.floor((b - min_B) * image_size / (max_B - min_B)))] += 1
+    # Binarise
+    image = image >= 1
+    # Attempt to count multiple values
+    count_B = 0
+    for i in range(image_size):
+        state = 0 # Waiting for first data point
+        for j in range(image_size):
+            if state == 0:
+                if image[i,j]:
+                    state = 1 # Seen a data point
+            elif state == 1:
+                if not image[i,j]:
+                    state = 2 # Seen the start of a potential gap
+            elif state == 2:
+                if image[i,j]:
+                    count_B += 1 # Seen a gap
+                    state = 1 # Wait for another gap to start
+    count_A = 0
+    for j in range(image_size):
+        state = 0 # Waiting for first data point
+        for i in range(image_size):
+            if state == 0:
+                if image[i,j]:
+                    state = 1 # Seen a data point
+            elif state == 1:
+                if not image[i,j]:
+                    state = 2 # Seen the start of a potential gap
+            elif state == 2:
+                if image[i,j]:
+                    count_A += 1 # Seen a gap
+                    state = 1 # Wait for another gap to start
+    # Return a measure of gappy ness of the data
+    return (1.0 + (count_A * 1.0 / image_size)) / (1.0 + (count_B * 1.0 / image_size))
+    
+def injectivity_10(A, B):
+    return injectivity(A, B, 10)
+    
+def injectivity_20(A, B):
+    return injectivity(A, B, 10)
+    
+def injectivity_40(A, B):
+    return injectivity(A, B, 10)
