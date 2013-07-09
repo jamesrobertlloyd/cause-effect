@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import shutil
 
 from counter import Progress
 
@@ -225,7 +226,7 @@ def flip_reverse_it(overwrite=False):
     with open('training-flipped-reversed/CEdata_train_publicinfo.csv', 'w') as info_data_file:
         info_data_file.write(info_header + ''.join(info_body))
         
-def flip_it(overwrite=True):
+def flip_it(overwrite=False):
     
     if (not overwrite) and os.path.exists('training-flipped/CEdata_train_pairs.csv') :
         print 'Output already exists - not overwriting'
@@ -294,6 +295,10 @@ def flip_it(overwrite=True):
         
     with open('training-flipped/CEdata_train_publicinfo.csv', 'w') as info_data_file:
         info_data_file.write(info_header + ''.join(info_body))
+        
+def move_validation_data():
+    shutil.copyfile('raw/CEfinal_valid_pairs.csv', 'validation/CEfinal_valid_pairs.csv')
+    shutil.copyfile('raw/CEfinal_valid_publicinfo.csv', 'validation/CEfinal_valid_publicinfo.csv')
     
 if __name__=="__main__":
     print('Concatenating data files to form training data')
@@ -304,3 +309,5 @@ if __name__=="__main__":
     reverse_it()
     print('Producing flipped and reversed data set')
     flip_reverse_it()
+    print('Moving validation data')
+    move_validation_data()
