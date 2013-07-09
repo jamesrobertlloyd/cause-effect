@@ -50,10 +50,9 @@ rf/rf_predictions.csv
 rf/train.csv
 rf/valid.csv
 archive/features-old/
-dbn/gdahl/mnist.npz
-dnn/gdahl/mnist.npz
+dnn/dropout/gdahl/mnist.npz
 *.DS_Store
-dnn/*.p
+dnn/dropout/*.p
 data/temp.csv
 rf/saved-forest-AB.RData
 output
