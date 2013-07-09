@@ -17,13 +17,22 @@ By using this Git repository you agree to these terms.
 
 Good luck!
 
+***How to use this repo***
+==========================
+
+* Clone the repo
+* Copy the contents of [this](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz) into data/raw
+* Change directory to source
+* Run python run.py
+* Examine the script above and the scripts it subsequently calls to understand how everything is set up (apologies - things are too fast moving to write a more explicit guide)
+
 ***Updates***
 =============
 
 * I have updated the data files - I am no longer splitting into training and ensemble training - also, I have generated extra data (for each pair (A,B), also include (B,A)) - this is in the directory data/training-flipped
 * I recommend that people generate features using methods that don't perform any learning - this way all features can be used when training the final classifier
 * I recommend that everyone focuses on producing real valued features
-* The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz)
+* The raw data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz)
 
 Repository / challenge details
 ==============================
@@ -40,23 +49,23 @@ An important subtlety is the scoring metric
 (See updates before reading comment below)
 At the moment I am undecided if it will be best for everyone to produce predicted probabilities for the 4 class problem, 3 class problem (combining A-B and A|B) or producing scores in the range \[-Inf, +Inf\] directly. For the moment I recommend trying to produce all of these measures, or work on whichever seems most natural for you. We can use everything in the final aggregation stage.
 
-Planned workflow / repository usage
-===================================
+OUT OF DATE - Planned workflow / repository usage
+=================================================
 
 * Develop predictors using the data in data/training
 * Evaluate the predictors on all training examples (see updates before reading me) (data/training, data/ensemble_training, data/kaggle_validation) and put the output in the predictors directory
 * Ensembling / aggregation methods will be used to combine the base predictors into a combined prediction, using data/ensemble_training as training data
 * Submissions will then be made to Kaggle, recording output in submissions
 
-Directory structure
-===================
+OUT OF DATE - Directory structure
+=================================
 
 ### data
 
 * raw - Raw data files downloaded from Kaggle
 * training - Split of training data to be used for training base predictors
-* ensemble_training - Split of training data to be used to train ensembling / aggregation methods
-* kaggle_validation - Test data examples with unknown targets
+* training-flipped - A copy of the training data, but with all flipped ((A,B) -> (B,A)) examples as well
+* validation - Test data examples with unknown targets
 
 ### benchmark-code
 
@@ -67,6 +76,6 @@ Python implementation of benchmark provided by competition organisers
 
 See basic_python_benchmark.csv for an example of the format for submission to Kaggle
 
-### predictors
+### features
 
-Base predictions, split by type 
+Base features
