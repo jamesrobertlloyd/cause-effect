@@ -17,13 +17,22 @@ By using this Git repository you agree to these terms.
 
 Good luck!
 
+***How to use this repo***
+==========================
+
+* Clone the repo
+* Copy the contents of [this](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz) into data/raw
+* Change directory to source
+* Run python run.py
+* Examine the script above and the scripts is subsequently calls to understand how everything is set up
+
 ***Updates***
 =============
 
 * I have updated the data files - I am no longer splitting into training and ensemble training - also, I have generated extra data (for each pair (A,B), also include (B,A)) - this is in the directory data/training-flipped
 * I recommend that people generate features using methods that don't perform any learning - this way all features can be used when training the final classifier
 * I recommend that everyone focuses on producing real valued features
-* The data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/data.tar.gz)
+* The raw data is no longer in the repo - it can be found [here](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz)
 
 Repository / challenge details
 ==============================
@@ -55,8 +64,8 @@ Directory structure
 
 * raw - Raw data files downloaded from Kaggle
 * training - Split of training data to be used for training base predictors
-* ensemble_training - Split of training data to be used to train ensembling / aggregation methods
-* kaggle_validation - Test data examples with unknown targets
+* training-flipped - A copy of the training data, but with all flipped ((A,B) -> (B,A)) examples as well
+* validation - Test data examples with unknown targets
 
 ### benchmark-code
 
@@ -67,6 +76,6 @@ Python implementation of benchmark provided by competition organisers
 
 See basic_python_benchmark.csv for an example of the format for submission to Kaggle
 
-### predictors
+### features
 
-Base predictions, split by type 
+Base features
