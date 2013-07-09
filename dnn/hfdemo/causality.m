@@ -14,19 +14,20 @@ maxepoch = 500;
 %%%%%%%%%%%%%%%%%
 %this dataset (by Ruslan Salakhutdinov) is available here: http://www.cs.toronto.edu/~jmartens/digs3pts_1.mat
 
-tmp = load('digs3pts_1.mat');
+%tmp = load('digs3pts_1.mat');
+tmp = load('copula_images.mat');
 indata = tmp.bdata';
-%outdata = tmp.bdata;
+outdata = tmp.tdata';
 intest = tmp.bdatatest';
-%outtest = tmp.bdatatest;
+outtest = tmp.tdatatest';
 clear tmp
 
 perm = randperm(size(indata,2));
 indata = indata( :, perm );
 
 %it's an auto-encoder so output is input
-outdata = indata;
-outtest = intest;
+%outdata = indata;
+%outtest = intest;
 
 
 runName = 'HFtestrun2';
@@ -37,9 +38,12 @@ runDesc = ['seed = ' num2str(seed) ', enter anything else you want to remember h
 %versions with rho and cg-backtrack computed on the training set
 
 
-layersizes = [400 200 100 50 25 6 25 50 100 200 400];
+%layersizes = [400 200 100 50 25 6 25 50 100 200 400];
 %Note that the code layer uses linear units
-layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
+%layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
+
+layersizes = [512 512 512];
+layertypes = {'logistic', 'logistic', 'logistic', 'logistic'};
 
 resumeFile = [];
 
@@ -66,7 +70,8 @@ jacket = 0;
 %this enables Jacket mode for the GPU
 %jacket = 1;
 
-errtype = 'L2'; %report the L2-norm error (in addition to the quantity actually being optimized, i.e. the log-likelihood)
+%errtype = 'L2'; %report the L2-norm error (in addition to the quantity actually being optimized, i.e. the log-likelihood)
+errtype = 'class'; 
 
 %standard L_2 weight-decay:
 weightcost = 2e-5

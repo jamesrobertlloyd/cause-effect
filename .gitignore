@@ -57,3 +57,9 @@ data/temp.csv
 rf/saved-forest-AB.RData
 output
 dnn/hfdemo/digs3pts_1.mat
+dnn/hfdemo/copula_images.mat
+dnn/hfdemo/HFtestrun2_nnet_epoch*.mat
+dnn/hfdemo/HFtestrun2_nnet_running.mat
+dnn/hfdemo/HFtestrun2.txt
+
+
