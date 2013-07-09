@@ -17,8 +17,18 @@ By using this Git repository you agree to these terms.
 
 Good luck!
 
-***How to use this repo***
-==========================
+Dependencies
+============
+
+R
+* randomForest
+
+python
+* numpy
+* scipy
+
+How to use this repo
+====================
 
 * Clone the repo
 * Copy the contents of [this](http://mlg.eng.cam.ac.uk/lloyd/temp/raw.tar.gz) into data/raw
