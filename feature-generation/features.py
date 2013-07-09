@@ -253,7 +253,7 @@ def injectivity_10(A, B):
     return injectivity(A, B, 10)
     
 def injectivity_20(A, B):
-    return injectivity(A, B, 10)
+    return injectivity(A, B, 20)
     
 def injectivity_40(A, B):
-    return injectivity(A, B, 10)
+    return injectivity(A, B, 40)
