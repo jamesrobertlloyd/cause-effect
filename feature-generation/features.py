@@ -1,5 +1,4 @@
 import numpy as np
-from sklearn.base import BaseEstimator
 from scipy.special import psi
 from scipy.stats.stats import pearsonr
 from scipy.stats.stats import spearmanr
