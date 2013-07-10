@@ -39,6 +39,13 @@ os.chdir('../feature-generation/')
 subprocess.call(['python', 'generate_injectivity_ratios.py'])
 os.chdir(saved_path)
 
+print '\n* * * * *\nCalling icgi feature script\n* * * * *\n'
+
+saved_path = os.getcwd()
+os.chdir('../feature-generation/')
+subprocess.call(['python', 'generate_icgi.py'])
+os.chdir(saved_path)
+
 print '\n* * * * *\nConcatenating features\n* * * * *\n'
 
 subprocess.call(['python', 'ensemble.py', 'combine-features'])

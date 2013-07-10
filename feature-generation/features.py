@@ -269,3 +269,53 @@ def injectivity_35(A, B):
     
 def injectivity_40(A, B):
     return injectivity(A, B, 40)
+    
+def icgi_entropy_AB(A, B):
+    A = (A - np.min(A)) * 1.0 / (np.max(A) - np.min(A))
+    B = (B - np.min(B)) * 1.0 / (np.max(B) - np.min(B))
+    AB_sorted = sorted(list(zip(list(A), list(B))))
+    A_sorted = np.array([a for (a, b) in AB_sorted])
+    B_sorted = np.array([b for (a, b) in AB_sorted])
+    A_diffs = A_sorted[1:] - A_sorted[:-1]
+    B_diffs = B_sorted[1:] - B_sorted[:-1]
+    A_diffs[A_diffs==0] = 1
+    B_diffs[B_diffs==0] = 1
+    return np.mean(np.log(np.abs(B_diffs))) - np.mean(np.log(np.abs(A_diffs)))
+    
+def icgi_entropy_BA(A, B):
+    return icgi_entropy_AB(B, A)
+    
+def icgi_slope_AB(A, B):
+    A = (A - np.min(A)) * 1.0 / (np.max(A) - np.min(A))
+    B = (B - np.min(B)) * 1.0 / (np.max(B) - np.min(B))
+    AB_sorted = sorted(list(zip(list(A), list(B))))
+    A_sorted = np.array([a for (a, b) in AB_sorted])
+    B_sorted = np.array([b for (a, b) in AB_sorted])
+    A_diffs = A_sorted[1:] - A_sorted[:-1]
+    B_diffs = B_sorted[1:] - B_sorted[:-1]
+    A_diffs[A_diffs==0] = 1
+    B_diffs[A_diffs==0] = 1 # Ignore division by zero
+    B_diffs[B_diffs==0] = 1 
+    A_diffs[B_diffs==0] = 1 # Don't take log of zero
+    return np.mean(np.log(np.abs(B_diffs / A_diffs)))
+    
+def icgi_slope_BA(A, B):
+    return icgi_slope_AB(B, A)
+    
+def icgi_entropy_AB_PIT(A, B):
+    # Take PIT first
+    A = scipy.stats.norm.cdf(scipy.stats.zscore(A))
+    B = scipy.stats.norm.cdf(scipy.stats.zscore(B))
+    return icgi_entropy_AB(A, B)
+    
+def icgi_entropy_BA_PIT(A, B):
+    return icgi_entropy_AB_PIT(B, A)
+    
+def icgi_slope_AB_PIT(A, B):
+    # Take PIT first
+    A = scipy.stats.norm.cdf(scipy.stats.zscore(A))
+    B = scipy.stats.norm.cdf(scipy.stats.zscore(B))
+    return icgi_slope_AB(A, B)
+    
+def icgi_slope_BA_PIT(A, B):
+    return icgi_slope_AB_PIT(B, A)
