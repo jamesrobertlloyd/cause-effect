@@ -13,7 +13,11 @@ def main(overwrite=False):
         return
 
     features = [('Injectivity 10', ['A','B'], f.injectivity_10),
+                ('Injectivity 15', ['A','B'], f.injectivity_15),
                 ('Injectivity 20', ['A','B'], f.injectivity_20),
+                ('Injectivity 25', ['A','B'], f.injectivity_25),
+                ('Injectivity 30', ['A','B'], f.injectivity_30),
+                ('Injectivity 35', ['A','B'], f.injectivity_35),
                 ('Injectivity 40', ['A','B'], f.injectivity_40)]
                 
     feature_names = [name for (name, dummy1, dummy2) in features]

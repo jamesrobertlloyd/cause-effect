@@ -252,8 +252,20 @@ def injectivity(A, B, image_size):
 def injectivity_10(A, B):
     return injectivity(A, B, 10)
     
+def injectivity_15(A, B):
+    return injectivity(A, B, 15)
+    
 def injectivity_20(A, B):
     return injectivity(A, B, 20)
+    
+def injectivity_25(A, B):
+    return injectivity(A, B, 25)
+    
+def injectivity_30(A, B):
+    return injectivity(A, B, 30)
+    
+def injectivity_35(A, B):
+    return injectivity(A, B, 35)
     
 def injectivity_40(A, B):
     return injectivity(A, B, 40)
