@@ -145,7 +145,7 @@ def main(dropout=False):
             print 'Layer %d Epoch %d State = %s' % (layer, epoch+1, state)
     
     if dropout:
-        net.learnRates = [0.6 for unused in net.learnRates]  
+        net.learnRates = [0.2 for unused in net.learnRates]  
     else:
         net.learnRates = [0.4 for unused in net.learnRates]      
             
@@ -157,7 +157,7 @@ def main(dropout=False):
     
     # Fine tuning
     
-    epochs = 100000
+    epochs = 1000000
     
     for ep, (trCE, trEr) in enumerate(net.fineTune(mbStream, epochs, mbPerEpoch, numMistakes, True, dropout)):
         print 'Fine tuning Epoch %d, trCE = %s, trEr = %s' % (ep, trCE, trEr)

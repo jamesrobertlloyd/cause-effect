@@ -25,25 +25,25 @@ if (FALSE)#(file.exists('saved-forest-AB.RData'))
         predictions.AB <- rf.AB$test$votes[,2]
     } else
     {
-        rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=FALSE)
+        rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 20000, importance=TRUE, keep.forest=FALSE)
         predictions.AB <- rf.AB$test$votes[,2]
     }
 }
 
 sort(rf.AB$importance[,4])
 
-#set.seed(1234)
-#rf.BA <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==-1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 5000, importance=TRUE, keep.forest=TRUE)
-#predictions.BA <- rf.BA$test$votes[,2]
+set.seed(1234)
+rf.BA <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==-1), xtest = X.valid, replace = TRUE, do.trace = 100, ntree = 5000, importance=TRUE, keep.forest=TRUE)
+predictions.BA <- rf.BA$test$votes[,2]
 
-#set.seed(1234)
-#rf <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]), xtest = X.valid, replace = TRUE, do.trace = 1000, ntree = 10000, importance=TRUE, keep.forest=TRUE)
+set.seed(1234)
+rf <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=FALSE)
 #predictions <- rf$test$votes[,3] - rf$test$votes[,1]
 
 # Write output
 
 write.table(predictions.AB, 'rf_predictions.csv', sep = ',', row.names = FALSE)
-#write.table(1-predictions.BA, 'rf_predictions.csv', sep = ',', row.names = FALSE)
+write.table(1-predictions.BA, 'rf_predictions.csv', sep = ',', row.names = FALSE)
 #write.table(predictions.AB-predictions.BA, 'rf_predictions.csv', sep = ',', row.names = FALSE)
 #write.table(exp(predictions.AB)-exp(predictions.BA), 'rf_predictions.csv', sep = ',', row.names = FALSE)
 
