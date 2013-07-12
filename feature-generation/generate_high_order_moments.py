@@ -1,86 +1,58 @@
+import numpy as np
+import os.path
+
 import data_io
 import features as f
-import numpy as np
-import pickle
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.pipeline import Pipeline
 
-def feature_extractor():
-    features = [('Moment 5 A', 'A', f.SimpleTransform(transformer=f.standard_moment_5)),
-                ('Moment 5 B', 'B', f.SimpleTransform(transformer=f.standard_moment_5)),
-                ('Moment 5 diff', ['A','B'], f.MultiColumnTransform(f.standard_moment_diff_5)),
-                ('Moment 5 ratio', ['A','B'], f.MultiColumnTransform(f.standard_moment_ratio_5)),
-                ('Moment 6 A', 'A', f.SimpleTransform(transformer=f.standard_moment_6)),
-                ('Moment 6 B', 'B', f.SimpleTransform(transformer=f.standard_moment_6)),
-                ('Moment 6 diff', ['A','B'], f.MultiColumnTransform(f.standard_moment_diff_6)),
-                ('Moment 6 ratio', ['A','B'], f.MultiColumnTransform(f.standard_moment_ratio_6)),
-                ('Moment 7 A', 'A', f.SimpleTransform(transformer=f.standard_moment_7)),
-                ('Moment 7 B', 'B', f.SimpleTransform(transformer=f.standard_moment_7)),
-                ('Moment 7 diff', ['A','B'], f.MultiColumnTransform(f.standard_moment_diff_7)),
-                ('Moment 7 ratio', ['A','B'], f.MultiColumnTransform(f.standard_moment_ratio_7)),
-                ('Moment 8 A', 'A', f.SimpleTransform(transformer=f.standard_moment_8)),
-                ('Moment 8 B', 'B', f.SimpleTransform(transformer=f.standard_moment_8)),
-                ('Moment 8 diff', ['A','B'], f.MultiColumnTransform(f.standard_moment_diff_8)),
-                ('Moment 8 ratio', ['A','B'], f.MultiColumnTransform(f.standard_moment_ratio_8)),
-                ('Moment 9 A', 'A', f.SimpleTransform(transformer=f.standard_moment_9)),
-                ('Moment 9 B', 'B', f.SimpleTransform(transformer=f.standard_moment_9)),
-                ('Moment 9 diff', ['A','B'], f.MultiColumnTransform(f.standard_moment_diff_9)),
-                ('Moment 9 ratio', ['A','B'], f.MultiColumnTransform(f.standard_moment_ratio_9))]
-    combined = f.FeatureMapper(features)
-    return combined
+def main(overwrite=False):
 
-def main():
-    extractor = feature_extractor()
+    #### TODO - sequential processing of data would significantly reduce memory demands
+    
+    if (not overwrite) and os.path.exists(os.path.join(data_io.get_paths()["real_feature_path"], 'high_order_moments.csv')):
+        print 'Feature file already exists - not overwriting'
+        return
+
+    features = [('Moment 5 A', 'A', f.standard_moment_5),
+                ('Moment 5 B', 'B', f.standard_moment_5),
+                ('Moment 5 diff', 'derived', 'output[key][0] - output[key][1]'),
+                ('Moment 5 ratio', 'derived', 'output[key][0] / output[key][1] if not output[key][1] == 0 else output[key][0] / 0.000001'),
+                ('Moment 6 A', 'A', f.standard_moment_6),
+                ('Moment 6 B', 'B', f.standard_moment_6),
+                ('Moment 6 diff', 'derived', 'output[key][4] - output[key][5]'),
+                ('Moment 6 ratio', 'derived', 'output[key][4] / output[key][5] if not output[key][5] == 0 else output[key][4] / 0.000001'),
+                ('Moment 7 A', 'A', f.standard_moment_7),
+                ('Moment 7 B', 'B', f.standard_moment_7),
+                ('Moment 7 diff', 'derived', 'output[key][8] - output[key][9]'),
+                ('Moment 7 ratio', 'derived', 'output[key][8] / output[key][9] if not output[key][9] == 0 else output[key][8] / 0.000001'),
+                ('Moment 8 A', 'A', f.standard_moment_8),
+                ('Moment 8 B', 'B', f.standard_moment_8),
+                ('Moment 8 diff', 'derived', 'output[key][12] - output[key][13]'),
+                ('Moment 8 ratio', 'derived', 'output[key][12] / output[key][13] if not output[key][13] == 0 else output[key][12] / 0.000001'),
+                ('Moment 9 A', 'A', f.standard_moment_9),
+                ('Moment 9 B', 'B', f.standard_moment_9),
+                ('Moment 9 diff', 'derived', 'output[key][16] - output[key][17]'),
+                ('Moment 9 ratio', 'derived', 'output[key][16] / output[key][17] if not output[key][17] == 0 else output[key][16] / 0.000001')]
+                
+    feature_names = [name for (name, dummy1, dummy2) in features]
     
     print("Reading in the training data")
     train = data_io.read_train_pairs()
 
     print("Extracting features from training data")
-    train_features = extractor.fit_transform(train[:])
-    
-    print("Reading in the ensemble training data")
-    ensemble_train = data_io.read_ensemble_train_pairs()
-
-    print("Extracting features from ensemble training data")
-    ensemble_train_features = extractor.fit_transform(ensemble_train[:])
+    train_features = f.apply_features(train, features)
     
     print("Reading in the validation data")
     valid = data_io.read_valid_pairs()
 
     print("Extracting features from validation data")
-    valid_features = extractor.fit_transform(valid[:])
+    valid_features = f.apply_features(valid, features)
     
-    all_features = np.concatenate((train_features, ensemble_train_features, valid_features))
-    
-    print("Concatenating names")
-    train_names = [train.irow(i).name for i in range(len(train))]
-    ensemble_train_names = [ensemble_train.irow(i).name for i in range(len(ensemble_train))]
-    valid_names = [valid.irow(i).name for i in range(len(valid))]
-    all_names = train_names + ensemble_train_names + valid_names
+    # Concatenate features
+    all_features = train_features
+    all_features.update(valid_features)
     
     print("Writing feature file")
-    feature_names = ['Moment 5 A',
-                     'Moment 5 B',
-                     'Moment 5 diff',
-                     'Moment 5 ratio',
-                     'Moment 6 A',
-                     'Moment 6 B',
-                     'Moment 6 diff',
-                     'Moment 6 ratio',
-                     'Moment 7 A',
-                     'Moment 7 B',
-                     'Moment 7 diff',
-                     'Moment 7 ratio',
-                     'Moment 8 A',
-                     'Moment 8 B',
-                     'Moment 8 diff',
-                     'Moment 8 ratio',
-                     'Moment 9 A',
-                     'Moment 9 B',
-                     'Moment 9 diff',
-                     'Moment 9 ratio',]
-    data_io.write_real_features('high_order_moments', all_names, all_features, feature_names)
+    data_io.write_real_features('high_order_moments', all_features, feature_names)
     
 if __name__=="__main__":
     main()

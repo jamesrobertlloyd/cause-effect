@@ -120,8 +120,8 @@ boost = 1/drop;
 %difference to the optimization, but does make it somewhat easier to guage
 %lambda and set its initial value since it will be 'independent' of the
 %number of training cases in each mini-batch
-%initlambda = 45.0;
-initlambda = 0.02;
+initlambda = 45.0;
+%initlambda = 0.02;
 
 
 if strcmp(mattype, 'hess')
