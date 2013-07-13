@@ -13,10 +13,11 @@ def combine_features(use_training_data=False):
                      '../features/real/publicinfo.csv',
                      '../features/real/reasonable_features.csv',#_extended.csv',
                      '../features/real/injectivity.csv',
-                     '../features/real/corrs.csv',
-                     '../features/real/high_order_moments.csv',
-                     '../features/real/icgi.csv',
-                     '../features/real/unreasonable_features.csv']#,
+                     #'../features/real/corrs.csv',
+                     #'../features/real/high_order_moments.csv',
+                     #'../features/real/icgi.csv',
+                     '../features/real/unreasonable_features.csv',
+                     ]
                      #'../predictors/real/kendall.csv']#,
                      #'../predictors/real/moment_5.csv']]
     combined = {row_name : [] for row_name in row_names}

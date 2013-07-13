@@ -7,7 +7,7 @@ rand('twister', seed+1 );
 %you will NEVER need more than a few hundred epochs unless you are doing
 %something very wrong.  Here 'epoch' means parameter update, not 'pass over
 %the training set'.
-maxepoch = 100;
+maxepoch = 1000;
 
 
 %CURVES
@@ -38,12 +38,11 @@ runDesc = ['seed = ' num2str(seed) ', enter anything else you want to remember h
 %versions with rho and cg-backtrack computed on the training set
 
 
-%layersizes = [400 200 100 50 25 20 25 50 100 200 400];
-layersizes = [200 100 25 100 200];
+layersizes = [400 200 100 50 25 10 25 50 100 200 400];
+%layersizes = [200 100 25 100 200];
 %Note that the code layer uses linear units
-%layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
-%layertypes = {'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic'};
-layertypes = {'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic'};
+layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
+%layertypes = {'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic'};
 
 resumeFile = [];
 

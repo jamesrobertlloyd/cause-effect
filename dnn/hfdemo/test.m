@@ -87,3 +87,29 @@ end
 
 figure;
 imagesc(reshape(y,20,20))
+
+%% Forward prop all
+
+y = indata(:,:);
+
+for i = 1:numlayers
+
+    x = W{i} * y + repmat(b{i}, 1, size(y, 2));
+
+    if strcmp(layertypes{i}, 'logistic')
+        y = 1./(1 + exp(-x));
+    elseif strcmp(layertypes{i}, 'tanh')
+        y = tanh(x);
+    elseif strcmp(layertypes{i}, 'linear')
+        y = x;
+    elseif strcmp(layertypes{i}, 'softmax' )
+        tmp = exp(x);
+        y = tmp./repmat( sum(tmp), [layersizes(i+1) 1] );   
+        tmp = [];
+    end
+    
+    if i == 3
+        r = y;
+    end
+
+end
