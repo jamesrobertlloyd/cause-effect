@@ -62,6 +62,7 @@ dnn/hfdemo/HFtestrun2_nnet_epoch*.mat
 dnn/hfdemo/HFtestrun2_nnet_running.mat
 dnn/hfdemo/HFtestrun2.txt
 dnn/hfdemo2/
-dnn/hfdemo/images.mat
+dnn/hfdemo3/
+dnn/hfdemo/images*.mat
 dnn/dropout/images.mat
 

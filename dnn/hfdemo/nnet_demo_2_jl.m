@@ -1,29 +1,28 @@
+%% Load and train
+
 seed = 1234;
 
 randn('state', seed );
 rand('twister', seed+1 );
 
-
 %you will NEVER need more than a few hundred epochs unless you are doing
 %something very wrong.  Here 'epoch' means parameter update, not 'pass over
 %the training set'.
-maxepoch = 1000;
+maxepoch = 100;
 
+numchunks = 4
+numchunks_test = 4;
 
-%CURVES
-%%%%%%%%%%%%%%%%%
-%this dataset (by Ruslan Salakhutdinov) is available here: http://www.cs.toronto.edu/~jmartens/digs3pts_1.mat
-
-%tmp = load('digs3pts_1.mat');
-tmp = load('images.mat');
-indata = tmp.train_images(1:27996,:)';
-%outdata = tmp.bdata;
-intest = tmp.test_images';
-%outtest = tmp.bdatatest;
+tmp = load('images_30_pit.mat');
+all_data = [tmp.train_images', tmp.valid_images'];
+data = all_data(:,1:(floor(size(all_data, 2) / (numchunks * 5)) * (numchunks * 5)));
+perm = randperm(size(data,2));
+indata = data(:,perm(1:(0.8*length(perm))));
+intest = data(:,perm((0.8*length(perm) + 1):end));
 clear tmp
 
-perm = randperm(size(indata,2));
-indata = indata( :, perm );
+%perm = randperm(size(indata,2));
+%indata = indata( :, perm );
 
 %it's an auto-encoder so output is input
 outdata = indata;
@@ -38,10 +37,10 @@ runDesc = ['seed = ' num2str(seed) ', enter anything else you want to remember h
 %versions with rho and cg-backtrack computed on the training set
 
 
-layersizes = [400 200 100 50 25 10 25 50 100 200 400];
+layersizes = [900 300 100 33 5 33 100 300 900];
 %layersizes = [200 100 25 100 200];
 %Note that the code layer uses linear units
-layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
+layertypes = {'logistic', 'logistic', 'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic', 'logistic', 'logistic'};
 %layertypes = {'logistic', 'logistic', 'linear', 'logistic', 'logistic', 'logistic'};
 
 resumeFile = [];
@@ -50,9 +49,6 @@ paramsp = [];
 Win = [];
 bin = [];
 %[Win, bin] = loadPretrainedNet_curves;
-
-numchunks = 4
-numchunks_test = 4;
 
 mattype = 'gn'; %Gauss-Newton.  The other choices probably won't work for whatever you're doing
 %mattype = 'hess';
@@ -77,3 +73,63 @@ weightcost = 2e-5
 
 
 nnet_train_2( runName, runDesc, paramsp, Win, bin, resumeFile, maxepoch, indata, outdata, numchunks, intest, outtest, numchunks_test, layersizes, layertypes, mattype, rms, errtype, hybridmode, weightcost, decay, jacket);
+
+%% Load
+
+load HFtestrun2_nnet_epoch100
+
+%% Set up set params
+
+layersizes = [size(indata,1) layersizes size(outdata,1)];
+
+%% More setup
+
+numlayers = size(layersizes,2) - 1;
+
+%% Unpack params
+
+M = paramsp;
+W = cell( numlayers, 1 );
+b = cell( numlayers, 1 );
+
+cur = 0;
+for i = 1:numlayers
+    W{i} = reshape( M((cur+1):(cur + layersizes(i)*layersizes(i+1)), 1), [layersizes(i+1) layersizes(i)] );
+
+    cur = cur + layersizes(i)*layersizes(i+1);
+
+    b{i} = reshape( M((cur+1):(cur + layersizes(i+1)), 1), [layersizes(i+1) 1] );
+
+    cur = cur + layersizes(i+1);
+end
+
+%% Forward prop all
+
+y = all_data(:,:);
+
+for i = 1:numlayers
+
+    x = W{i} * y + repmat(b{i}, 1, size(y, 2));
+
+    if strcmp(layertypes{i}, 'logistic')
+        y = 1./(1 + exp(-x));
+    elseif strcmp(layertypes{i}, 'tanh')
+        y = tanh(x);
+    elseif strcmp(layertypes{i}, 'linear')
+        y = x;
+    elseif strcmp(layertypes{i}, 'softmax' )
+        tmp = exp(x);
+        y = tmp./repmat( sum(tmp), [layersizes(i+1) 1] );   
+        tmp = [];
+    end
+    
+    if i == 5
+        r = y;
+    end
+
+end
+
+%% Save data
+
+features = r';
+csvwrite('auto_pit_30_05.csv', features);

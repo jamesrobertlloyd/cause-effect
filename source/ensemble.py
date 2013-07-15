@@ -13,6 +13,13 @@ def combine_features(use_training_data=False):
                      '../features/real/publicinfo.csv',
                      '../features/real/reasonable_features.csv',#_extended.csv',
                      '../features/real/injectivity.csv',
+                     '../features/real/auto_pit_20_10.csv',
+                     '../features/real/auto_pit_20_15.csv',
+                     '../features/real/auto_pit_10_05.csv',
+                     '../features/real/auto_pit_10_10.csv',
+                     '../features/real/auto_pit_10_15.csv',
+                     '../features/real/auto_pit_30_10.csv',
+                     '../features/real/auto_pit_30_15.csv',
                      #'../features/real/corrs.csv',
                      #'../features/real/high_order_moments.csv',
                      #'../features/real/icgi.csv',
@@ -23,7 +30,7 @@ def combine_features(use_training_data=False):
     combined = {row_name : [] for row_name in row_names}
     feature_names = []
     for filename in feature_files:
-        with open(filename, 'r') as data:
+        with open(filename, 'rU') as data:
             #data.readline() # Skip header
             feature_names += data.readline().strip().split(',')[1:]
             for line in data:

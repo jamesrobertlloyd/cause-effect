@@ -50,7 +50,7 @@ for i = 1:numlayers
         tmp = [];
     end
     
-    if i == 3
+    if i == 6
         r = y
     end
 
@@ -67,7 +67,7 @@ y = zeros(size(r));
 y(25) = 1;
 y = randn(size(r));
 
-for i = 4:numlayers
+for i = 7:numlayers
 
     x = W{i} * y + b{i};
 
@@ -90,7 +90,7 @@ imagesc(reshape(y,20,20))
 
 %% Forward prop all
 
-y = indata(:,:);
+y = data(:,:);
 
 for i = 1:numlayers
 
@@ -108,7 +108,7 @@ for i = 1:numlayers
         tmp = [];
     end
     
-    if i == 3
+    if i == 6
         r = y;
     end
 

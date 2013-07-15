@@ -53,8 +53,10 @@ trees = 100000
 #predictions.BA <- rf.BA$test$votes[,2]
 
 set.seed(1234)
-rf <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 20000, importance=TRUE, keep.forest=FALSE)
+rf <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = 5000, importance=TRUE, keep.forest=FALSE)
 predictions <- rf$test$votes[,3] - rf$test$votes[,1]
+
+sort(rf$importance[,4])
 
 # Write output
 
