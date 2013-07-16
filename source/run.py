@@ -46,6 +46,20 @@ os.chdir('../feature-generation/')
 subprocess.call(['python', 'generate_icgi.py'])
 os.chdir(saved_path)
 
+print '\n* * * * *\nCalling high order moment feature script\n* * * * *\n'
+
+saved_path = os.getcwd()
+os.chdir('../feature-generation/')
+subprocess.call(['python', 'generate_high_order_moments.py'])
+os.chdir(saved_path)
+
+print '\n* * * * *\nCalling corrs feature script\n* * * * *\n'
+
+saved_path = os.getcwd()
+os.chdir('../feature-generation/')
+subprocess.call(['python', 'generate_corrs.py'])
+os.chdir(saved_path)
+
 print '\n* * * * *\nConcatenating features\n* * * * *\n'
 
 subprocess.call(['python', 'ensemble.py', 'combine-features'])

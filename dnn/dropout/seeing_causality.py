@@ -111,8 +111,8 @@ def main(dropout=False):
         pairs_body = pairs_data_file.readlines()
     Targs = np.array(list(zip([1.0 if line.split(',')[1] == '1' else 0.0 for line in pairs_body], [0.0 if line.split(',')[1] == '1' else 1.0 for line in pairs_body])))
     print('Splitting data')
-    trainInps = Inps[1:28000,:]
-    trainTargs = Targs[1:28000,:]
+    trainInps = Inps[0:28000,:]
+    trainTargs = Targs[0:28000,:]
     testInps = Inps[28000:32000,:]
     testTargs = Targs[28000:32000,:]
     print('Doing DNN stuff')
