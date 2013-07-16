@@ -63,6 +63,12 @@ dnn/hfdemo/HFtestrun2_nnet_running.mat
 dnn/hfdemo/HFtestrun2.txt
 dnn/hfdemo2/
 dnn/hfdemo3/
+dnn/hfdemo4/
+dnn/hfdemo5/
+dnn/hfdemo6/
+dnn/hfdemo7/
+dnn/hfdemo8/
+dnn/hfdemo9/
 dnn/hfdemo/images*.mat
 dnn/dropout/images.mat
 
