@@ -157,10 +157,12 @@ def main(dropout=False):
     
     # Fine tuning
     
-    epochs = 1000000
+    epochs = 10000000
     
     for ep, (trCE, trEr) in enumerate(net.fineTune(mbStream, epochs, mbPerEpoch, numMistakes, True, dropout)):
         print 'Fine tuning Epoch %d, trCE = %s, trEr = %s' % (ep, trCE, trEr)
+        with open('net.p', 'wb') as pickle_file:
+            pickle.dump(net, pickle_file)
         
     # Try something
     
