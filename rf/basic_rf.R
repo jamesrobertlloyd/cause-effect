@@ -43,8 +43,8 @@ trees = 100000
         #rf.AB <- randomForest(X.train[,2:dim(X.train)[2]], as.factor(X.train[,1]==1), xtest = X.valid, replace = TRUE, do.trace = 50, ntree = trees, importance=TRUE, keep.forest=FALSE)
 #        rf.AB <- randomForest(X.train[,1+feature.subset], as.factor(X.train[,1]==1), xtest = X.valid[,feature.subset], replace = TRUE, do.trace = 50, ntree = trees, importance=TRUE, keep.forest=FALSE)
 #        predictions.AB <- rf.AB$test$votes[,2]
-#    }
 #}
+#    }
 
 #sort(rf.AB$importance[,4])
 
