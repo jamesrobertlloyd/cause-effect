@@ -69,3 +69,48 @@ sort(rf$importance[,4])
 
 write.table(predictions, 'rf_predictions.csv', sep = ',', row.names = FALSE)
 
+# Validation version
+
+set.seed(1234)
+
+perm <- sample.int(dim(X.train)[1])
+train <- perm[1:floor(0.8*dim(X.train)[1])]
+test <- perm[(floor(0.8*dim(X.train)[1])+1):dim(X.train)[1]]
+
+set.seed(1234)
+
+trees = 1000
+mtry = 65
+sampsize = 17500
+
+rf <- randomForest(X.train[train,2:dim(X.train)[2]], as.factor(X.train[train,1]), xtest = X.train[test,2:dim(X.train)[2]], ytest=as.factor(X.train[test,1]), replace = TRUE, do.trace = 5, ntree = trees, importance=TRUE, keep.forest=FALSE, mtry=mtry, sampsize=sampsize)
+p1 <- rf$test$votes[,1]
+p2 <- rf$test$votes[,2]
+p3 <- rf$test$votes[,3]
+
+predictions <- ((p3^1.0) - (p1^1.0)) * log(((1-p2) ^ 1.4) + 1.0000001) + (p3 - p1)*0.009
+
+truth <- X.train[test,1]
+
+auc <- function(outcome, proba){
+  N = length(proba)
+  N_pos = sum(outcome)
+  df = data.frame(out = outcome, prob = proba)
+  df = df[order(-df$prob),]
+  df$above = (1:N) - cumsum(df$out)
+  return( 1- sum( df$above * df$out ) / (N_pos * (N-N_pos) ) )
+}
+
+bi.auc <- function(outcome, proba){
+  return (0.5 * (auc(1*(outcome==1), proba) + auc(1*(outcome==-1), -proba)))
+}
+
+safe.log <- function(x, min.value=-1000000){
+  temp <- log(x)
+  temp[is.nan(temp)] <- min.value
+  temp[temp < min.value] <- min.value
+  return(temp)
+}
+
+bi.auc(truth, predictions)
+

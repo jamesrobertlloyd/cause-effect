@@ -83,6 +83,30 @@ def format_rf_output():
         lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
     with open('../output/rf_predictions.csv', 'w') as outfile:
         outfile.writelines(lines)
+    
+def format_rf_regression_output():
+    valid_row_names = ['valid%d' % i for i in range(1, 4050+1, 1)]
+    with open('../rf/rf_regression_predictions.csv', 'r') as data:
+        data.readline() # Skip header
+        lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
+    with open('../output/rf_regression_predictions.csv', 'w') as outfile:
+        outfile.writelines(lines)
+    
+def format_gbm_output():
+    valid_row_names = ['valid%d' % i for i in range(1, 4050+1, 1)]
+    with open('../rf/gbm_predictions.csv', 'r') as data:
+        data.readline() # Skip header
+        lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
+    with open('../output/gbm_predictions.csv', 'w') as outfile:
+        outfile.writelines(lines)
+    
+def format_gbm_regression_output():
+    valid_row_names = ['valid%d' % i for i in range(1, 4050+1, 1)]
+    with open('../rf/gbm_regression_predictions.csv', 'r') as data:
+        data.readline() # Skip header
+        lines = ['SampleID,Target\n'] + [valid_row_names[i] + ',' + line for (i, line) in enumerate(data)]
+    with open('../output/gbm_regression_predictions.csv', 'w') as outfile:
+        outfile.writelines(lines)
         
 if __name__=="__main__":
     if len(sys.argv) > 1:
