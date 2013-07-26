@@ -35,7 +35,7 @@ trees = 10000
 mtry = 65
 sampsize = 17500
 
-rf <- randomForest(X.train[train,2:dim(X.train)[2]], X.train[train,1], xtest = X.train[test,2:dim(X.train)[2]], ytest=X.train[test,1], replace = TRUE, do.trace = 5, ntree = trees, importance=TRUE, keep.forest=FALSE, mtry=mtry, sampsize=sampsize)
+rf <- randomForest(X.train[train,2:dim(X.train)[2]], X.train[train,1], xtest = X.train[test,2:dim(X.train)[2]], ytest=X.train[test,1], replace = TRUE, do.trace = 100, ntree = trees, importance=TRUE, keep.forest=FALSE)#, mtry=mtry, sampsize=sampsize)
 predictions <- rf$test$predicted
 
 truth <- X.train[test,1]
