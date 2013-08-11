@@ -8,6 +8,7 @@ from scipy.stats import gmean
 from scipy.stats import moment
 import scipy.stats
 from counter import Progress
+from oct2py import octave
             
 def apply_features(data, features):
     #### TODO - can I be made more efficient?
@@ -319,3 +320,14 @@ def icgi_slope_AB_PIT(A, B):
     
 def icgi_slope_BA_PIT(A, B):
     return icgi_slope_AB_PIT(B, A)
+
+def add_noise_model_AB(A,B):
+    pv = octave.call('/home/ole/src/cause_effect_sample_code/additive-noise/code/fitA.m',A,B)
+    print "add_noise_model_AB=",pv
+    return pv
+
+def add_noise_model_BA(A,B):
+    pv = octave.call('/home/ole/src/cause_effect_sample_code/additive-noise/code/fitA.m',B,A)
+    print "add_noise_model_BA=",pv
+    return pv
+
