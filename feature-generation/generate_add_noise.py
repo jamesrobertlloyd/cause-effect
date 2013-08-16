@@ -36,7 +36,7 @@ def main(overwrite=False):
     all_features.update(valid_features)
 
     print("Writing feature file")
-    data_io.write_real_features('icgi', all_features, feature_names)
+    data_io.write_real_features('add_noise', all_features, feature_names)
     
 if __name__=="__main__":
     main()
